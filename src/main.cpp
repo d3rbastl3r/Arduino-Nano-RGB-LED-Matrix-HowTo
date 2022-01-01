@@ -55,16 +55,12 @@ void setup() {
 
 void loop() {
   uint8_t delayMs = 60;
-
-  digitalWrite(PIN_A, LOW);
-  digitalWrite(PIN_B, LOW);
-  digitalWrite(PIN_C, LOW);
-  digitalWrite(PIN_D, LOW);
-  delay(delayMs);
-
-  digitalWrite(PIN_A, HIGH);
-  digitalWrite(PIN_B, LOW);
-  digitalWrite(PIN_C, LOW);
-  digitalWrite(PIN_D, LOW);
-  delay(delayMs);
+  
+  for (uint8_t line=0; line<16; line++) {
+    digitalWrite(PIN_A, line & 0b00000001);
+    digitalWrite(PIN_B, line & 0b00000010);
+    digitalWrite(PIN_C, line & 0b00000100);
+    digitalWrite(PIN_D, line & 0b00001000);
+    delay(delayMs);
+  }
 }
