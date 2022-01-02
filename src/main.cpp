@@ -19,9 +19,13 @@
 #define DATA_ROWS 32 // Y
 #define DATA_COLUMNS 64 // X
 #define DATA_COLUMN_BYTES 8 // DATA_COLUMNS/8
+#define DATA_COLORS 3
 
+#define DATA_RED_COLOR_POS 0
+#define DATA_GREEN_COLOR_POS 1
+#define DATA_BLUE_COLOR_POS 2
 
-uint8_t data[DATA_ROWS][DATA_COLUMN_BYTES] = {};
+uint8_t data[DATA_COLORS][DATA_ROWS][DATA_COLUMN_BYTES] = {};
 
 /**
  * Push data from "data"-Array to the registers of the RGB LED Matrix
@@ -29,8 +33,14 @@ uint8_t data[DATA_ROWS][DATA_COLUMN_BYTES] = {};
 void puschData(uint8_t yPos1, uint8_t yPos2) {
     for (uint8_t xBytePos=0; xBytePos<DATA_COLUMN_BYTES; xBytePos++) {
         for (uint8_t xBitPos=128; xBitPos>=1; xBitPos >>= 1) {
-            digitalWrite(PIN_R1, data[yPos1][xBytePos] & xBitPos);
-            digitalWrite(PIN_R2, data[yPos2][xBytePos] & xBitPos);
+            digitalWrite(PIN_R1, data[DATA_RED_COLOR_POS][yPos1][xBytePos] & xBitPos);
+            digitalWrite(PIN_R2, data[DATA_RED_COLOR_POS][yPos2][xBytePos] & xBitPos);
+
+            digitalWrite(PIN_G1, data[DATA_GREEN_COLOR_POS][yPos1][xBytePos] & xBitPos);
+            digitalWrite(PIN_G2, data[DATA_GREEN_COLOR_POS][yPos2][xBytePos] & xBitPos);
+
+            digitalWrite(PIN_B1, data[DATA_BLUE_COLOR_POS][yPos1][xBytePos] & xBitPos);
+            digitalWrite(PIN_B2, data[DATA_BLUE_COLOR_POS][yPos2][xBytePos] & xBitPos);
 
             digitalWrite(PIN_CLK, HIGH);
             digitalWrite(PIN_CLK, LOW);
@@ -78,8 +88,8 @@ void setup() {
     pinMode(PIN_OE_NOT, OUTPUT);
 
     // Test Output
-    data[0][0] = 0b00011001;
-    data[16][0] = 0b10000000;
+    data[DATA_RED_COLOR_POS][0][0] = 0b00011001;
+    data[DATA_GREEN_COLOR_POS][16][0] = 0b10000000;
 }
 
 void loop() {
