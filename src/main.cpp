@@ -17,19 +17,23 @@
 #define PIN_OE_NOT 2
 
 #define DATA_ROWS 32 // Y
+#define DATA_COLUMNS 64 // X
+#define DATA_COLUMN_BYTES 8 // DATA_COLUMNS/8
 
 
-uint8_t data[DATA_ROWS] = {};
+uint8_t data[DATA_ROWS][DATA_COLUMN_BYTES] = {};
 
 /**
  * Push data from "data"-Array to the registers of the RGB LED Matrix
  */
 void puschData(uint8_t yPos) {
-    for (uint8_t xBitPos=128; xBitPos>=1; xBitPos >>= 1) {
-        digitalWrite(PIN_R1, data[yPos] & xBitPos);
+    for (uint8_t xBytePos=0; xBytePos<DATA_COLUMN_BYTES; xBytePos++) {
+        for (uint8_t xBitPos=128; xBitPos>=1; xBitPos >>= 1) {
+            digitalWrite(PIN_R1, data[yPos][xBytePos] & xBitPos);
 
-        digitalWrite(PIN_CLK, HIGH);
-        digitalWrite(PIN_CLK, LOW);
+            digitalWrite(PIN_CLK, HIGH);
+            digitalWrite(PIN_CLK, LOW);
+        }
     }
 }
 
@@ -72,7 +76,7 @@ void setup() {
     pinMode(PIN_OE_NOT, OUTPUT);
 
     // Test Output
-    data[0] = 0b00011001;
+    data[0][0] = 0b00011001;
 }
 
 void loop() {
