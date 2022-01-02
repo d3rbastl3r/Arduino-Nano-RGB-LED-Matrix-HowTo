@@ -26,10 +26,11 @@ uint8_t data[DATA_ROWS][DATA_COLUMN_BYTES] = {};
 /**
  * Push data from "data"-Array to the registers of the RGB LED Matrix
  */
-void puschData(uint8_t yPos) {
+void puschData(uint8_t yPos1, uint8_t yPos2) {
     for (uint8_t xBytePos=0; xBytePos<DATA_COLUMN_BYTES; xBytePos++) {
         for (uint8_t xBitPos=128; xBitPos>=1; xBitPos >>= 1) {
-            digitalWrite(PIN_R1, data[yPos][xBytePos] & xBitPos);
+            digitalWrite(PIN_R1, data[yPos1][xBytePos] & xBitPos);
+            digitalWrite(PIN_R2, data[yPos2][xBytePos] & xBitPos);
 
             digitalWrite(PIN_CLK, HIGH);
             digitalWrite(PIN_CLK, LOW);
@@ -41,18 +42,19 @@ void puschData(uint8_t yPos) {
  * Draw/Show a single frame on the RGB LED Matrix
  */
 void drawFrame() {
-    for (uint8_t yPos=0; yPos<DATA_ROWS; yPos++) {
-        puschData(yPos);
+    uint8_t dataRowsHalf = DATA_ROWS / 2;
+    for (uint8_t yPos1=0; yPos1<dataRowsHalf; yPos1++) {
+        puschData(yPos1, yPos1 + dataRowsHalf);
 
         digitalWrite(PIN_OE_NOT, HIGH);
 
         digitalWrite(PIN_LAT, HIGH);
         digitalWrite(PIN_LAT, LOW);
 
-        digitalWrite(PIN_A, yPos & 0b00000001);
-        digitalWrite(PIN_B, yPos & 0b00000010);
-        digitalWrite(PIN_C, yPos & 0b00000100);
-        digitalWrite(PIN_D, yPos & 0b00001000);
+        digitalWrite(PIN_A, yPos1 & 0b00000001);
+        digitalWrite(PIN_B, yPos1 & 0b00000010);
+        digitalWrite(PIN_C, yPos1 & 0b00000100);
+        digitalWrite(PIN_D, yPos1 & 0b00001000);
 
         digitalWrite(PIN_OE_NOT, LOW);
     }
@@ -77,6 +79,7 @@ void setup() {
 
     // Test Output
     data[0][0] = 0b00011001;
+    data[16][0] = 0b10000000;
 }
 
 void loop() {
