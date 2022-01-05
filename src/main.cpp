@@ -32,15 +32,15 @@ uint8_t data[DATA_COLORS][DATA_ROWS][DATA_COLUMN_BYTES] = {};
  */
 void puschData(uint8_t yPos1, uint8_t yPos2) {
     for (uint8_t xBytePos=0; xBytePos<DATA_COLUMN_BYTES; xBytePos++) {
-        for (uint8_t xBitPos=128; xBitPos>=1; xBitPos >>= 1) {
-            digitalWrite(PIN_R1, data[DATA_RED_COLOR_POS][yPos1][xBytePos] & xBitPos);
-            digitalWrite(PIN_R2, data[DATA_RED_COLOR_POS][yPos2][xBytePos] & xBitPos);
+        for (uint8_t xBitMask=128; xBitMask>=1; xBitMask >>= 1) {
+            digitalWrite(PIN_R1, data[DATA_RED_COLOR_POS][yPos1][xBytePos] & xBitMask);
+            digitalWrite(PIN_R2, data[DATA_RED_COLOR_POS][yPos2][xBytePos] & xBitMask);
 
-            digitalWrite(PIN_G1, data[DATA_GREEN_COLOR_POS][yPos1][xBytePos] & xBitPos);
-            digitalWrite(PIN_G2, data[DATA_GREEN_COLOR_POS][yPos2][xBytePos] & xBitPos);
+            digitalWrite(PIN_G1, data[DATA_GREEN_COLOR_POS][yPos1][xBytePos] & xBitMask);
+            digitalWrite(PIN_G2, data[DATA_GREEN_COLOR_POS][yPos2][xBytePos] & xBitMask);
 
-            digitalWrite(PIN_B1, data[DATA_BLUE_COLOR_POS][yPos1][xBytePos] & xBitPos);
-            digitalWrite(PIN_B2, data[DATA_BLUE_COLOR_POS][yPos2][xBytePos] & xBitPos);
+            digitalWrite(PIN_B1, data[DATA_BLUE_COLOR_POS][yPos1][xBytePos] & xBitMask);
+            digitalWrite(PIN_B2, data[DATA_BLUE_COLOR_POS][yPos2][xBytePos] & xBitMask);
 
             digitalWrite(PIN_CLK, HIGH);
             digitalWrite(PIN_CLK, LOW);
