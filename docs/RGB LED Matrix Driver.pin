@@ -1,0 +1,15 @@
+Pin | Port | Funct. | I/O | Descr.
+----|------|--------|-----|--------------------
+2   | PD2  | !OE    |  O  | LED Matrix Output Enable
+3   | PD3  | CLK    |  O  | LED Matrix Data Clock
+4   | PD4  | C      |  O  | LED Matrix Row Address 0100
+5   | PD5  | A      |  O  | LED Matrix Row Address 0001
+6   | PD6  | G2     |  O  | LED Matrix Green 2 Data
+7   | PD7  | R2     |  O  | LED Matrix Red 2 Data
+8   | PB0  | G1     |  O  | LED Matrix Green 1 Data
+9   | PB1  | R1     |  O  | LED Matrix Red 1 Data
+15  | PC1  | B1     |  O  | LED Matrix Blue 1 Data 
+16  | PC2  | B2     |  O  | LED Matrix Blue 2 Data
+17  | PC3  | B      |  O  | LED Matrix Row Address 0010 
+18  | PC4  | D      |  O  | LED Matrix Row Address 1000
+19  | PC5  | LAT    |  O  | LED Matrix Data Latch
