@@ -1,54 +1,54 @@
 #include <Arduino.h>
 
-#define PIN_R1 9
+#define PIN_R1_MODE_OUT (DDRB |= (1 << DDB1))
 #define PIN_R1_SET_LOW (PORTB &= ~(1 << PB1))
 #define PIN_R1_SET_HIGH (PORTB |= (1 << PB1))
 
-#define PIN_R2 7
+#define PIN_R2_MODE_OUT (DDRD |= (1 << DDD7))
 #define PIN_R2_SET_LOW (PORTD &= ~(1 << PD7))
 #define PIN_R2_SET_HIGH (PORTD |= (1 << PD7))
 
-#define PIN_G1 8
+#define PIN_G1_MODE_OUT (DDRB |= (1 << DDB0))
 #define PIN_G1_SET_LOW (PORTB &= ~(1 << PB0))
 #define PIN_G1_SET_HIGH (PORTB |= (1 << PB0))
 
-#define PIN_G2 6
+#define PIN_G2_MODE_OUT (DDRD |= (1 << DDD6))
 #define PIN_G2_SET_LOW (PORTD &= ~(1 << PD6))
 #define PIN_G2_SET_HIGH (PORTD |= (1 << PD6))
 
-#define PIN_B1 15
+#define PIN_B1_MODE_OUT (DDRC |= (1 << DDC1))
 #define PIN_B1_SET_LOW (PORTC &= ~(1 << PC1))
 #define PIN_B1_SET_HIGH (PORTC |= (1 << PC1))
 
-#define PIN_B2 16
+#define PIN_B2_MODE_OUT (DDRC |= (1 << DDC2))
 #define PIN_B2_SET_LOW (PORTC &= ~(1 << PC2))
 #define PIN_B2_SET_HIGH (PORTC |= (1 << PC2))
 
-#define PIN_A 5
+#define PIN_A_MODE_OUT (DDRD |= (1 << DDD5))
 #define PIN_A_SET_LOW (PORTD &= ~(1 << PD5))
 #define PIN_A_SET_HIGH (PORTD |= (1 << PD5))
 
-#define PIN_B 17
+#define PIN_B_MODE_OUT (DDRC |= (1 << DDC3))
 #define PIN_B_SET_LOW (PORTC &= ~(1 << PC3))
 #define PIN_B_SET_HIGH (PORTC |= (1 << PC3))
 
-#define PIN_C 4
+#define PIN_C_MODE_OUT (DDRD |= (1 << DDD4))
 #define PIN_C_SET_LOW (PORTD &= ~(1 << PD4))
 #define PIN_C_SET_HIGH (PORTD |= (1 << PD4))
 
-#define PIN_D 18
+#define PIN_D_MODE_OUT (DDRC |= (1 << DDC4))
 #define PIN_D_SET_LOW (PORTC &= ~(1 << PC4))
 #define PIN_D_SET_HIGH (PORTC |= (1 << PC4))
 
-#define PIN_CLK 3
+#define PIN_CLK_MODE_OUT (DDRD |= (1 << DDD3))
 #define PIN_CLK_SET_LOW (PORTD &= ~(1 << PD3))
 #define PIN_CLK_SET_HIGH (PORTD |= (1 << PD3))
 
-#define PIN_LAT 19
+#define PIN_LAT_MODE_OUT (DDRC |= (1 << DDC5))
 #define PIN_LAT_SET_LOW (PORTC &= ~(1 << PC5))
 #define PIN_LAT_SET_HIGH (PORTC |= (1 << PC5))
 
-#define PIN_OE_NOT 2
+#define PIN_OE_MODE_OUT (DDRD |= (1 << DDD2))
 #define PIN_OE_SET_LOW (PORTD &= ~(1 << PD2))
 #define PIN_OE_SET_HIGH (PORTD |= (1 << PD2))
 
@@ -154,21 +154,21 @@ void drawFrame() {
 }
 
 void setup() {
-    pinMode(PIN_R1, OUTPUT);
-    pinMode(PIN_R2, OUTPUT);
-    pinMode(PIN_G1, OUTPUT);
-    pinMode(PIN_G2, OUTPUT);
-    pinMode(PIN_B1, OUTPUT);
-    pinMode(PIN_B2, OUTPUT);
+    PIN_R1_MODE_OUT;
+    PIN_R2_MODE_OUT;
+    PIN_G1_MODE_OUT;
+    PIN_G2_MODE_OUT;
+    PIN_B1_MODE_OUT;
+    PIN_B2_MODE_OUT;
 
-    pinMode(PIN_A, OUTPUT);
-    pinMode(PIN_B, OUTPUT);
-    pinMode(PIN_C, OUTPUT);
-    pinMode(PIN_D, OUTPUT);
+    PIN_A_MODE_OUT;
+    PIN_B_MODE_OUT;
+    PIN_C_MODE_OUT;
+    PIN_D_MODE_OUT;
 
-    pinMode(PIN_CLK, OUTPUT);
-    pinMode(PIN_LAT, OUTPUT);
-    pinMode(PIN_OE_NOT, OUTPUT);
+    PIN_CLK_MODE_OUT;
+    PIN_LAT_MODE_OUT;
+    PIN_OE_MODE_OUT;
 
     // Test Output
     data[DATA_RED_COLOR_POS][0][0] = 0b00011001;
