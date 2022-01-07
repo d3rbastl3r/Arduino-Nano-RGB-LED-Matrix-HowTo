@@ -1,11 +1,28 @@
 #include <Arduino.h>
 
 #define PIN_R1 9
+#define PIN_R1_SET_LOW (PORTB &= ~(1 << PB1))
+#define PIN_R1_SET_HIGH (PORTB |= (1 << PB1))
+
 #define PIN_R2 7
+#define PIN_R2_SET_LOW (PORTD &= ~(1 << PD7))
+#define PIN_R2_SET_HIGH (PORTD |= (1 << PD7))
+
 #define PIN_G1 8
+#define PIN_G1_SET_LOW (PORTB &= ~(1 << PB0))
+#define PIN_G1_SET_HIGH (PORTB |= (1 << PB0))
+
 #define PIN_G2 6
+#define PIN_G2_SET_LOW (PORTD &= ~(1 << PD6))
+#define PIN_G2_SET_HIGH (PORTD |= (1 << PD6))
+
 #define PIN_B1 15
+#define PIN_B1_SET_LOW (PORTC &= ~(1 << PC1))
+#define PIN_B1_SET_HIGH (PORTC |= (1 << PC1))
+
 #define PIN_B2 16
+#define PIN_B2_SET_LOW (PORTC &= ~(1 << PC2))
+#define PIN_B2_SET_HIGH (PORTC |= (1 << PC2))
 
 #define PIN_A 5
 #define PIN_B 17
@@ -13,6 +30,9 @@
 #define PIN_D 18
 
 #define PIN_CLK 3
+#define PIN_CLK_SET_LOW (PORTD &= ~(1 << PD3))
+#define PIN_CLK_SET_HIGH (PORTD |= (1 << PD3))
+
 #define PIN_LAT 19
 #define PIN_OE_NOT 2
 
@@ -33,17 +53,45 @@ uint8_t data[DATA_COLORS][DATA_ROWS][DATA_COLUMN_BYTES] = {};
 void puschData(uint8_t yPos1, uint8_t yPos2) {
     for (uint8_t xBytePos=0; xBytePos<DATA_COLUMN_BYTES; xBytePos++) {
         for (uint8_t xBitMask=128; xBitMask>=1; xBitMask >>= 1) {
-            digitalWrite(PIN_R1, data[DATA_RED_COLOR_POS][yPos1][xBytePos] & xBitMask);
-            digitalWrite(PIN_R2, data[DATA_RED_COLOR_POS][yPos2][xBytePos] & xBitMask);
 
-            digitalWrite(PIN_G1, data[DATA_GREEN_COLOR_POS][yPos1][xBytePos] & xBitMask);
-            digitalWrite(PIN_G2, data[DATA_GREEN_COLOR_POS][yPos2][xBytePos] & xBitMask);
+            if (data[DATA_RED_COLOR_POS][yPos1][xBytePos] & xBitMask) {
+                PIN_R1_SET_HIGH;
+            } else {
+                PIN_R1_SET_LOW;
+            }
 
-            digitalWrite(PIN_B1, data[DATA_BLUE_COLOR_POS][yPos1][xBytePos] & xBitMask);
-            digitalWrite(PIN_B2, data[DATA_BLUE_COLOR_POS][yPos2][xBytePos] & xBitMask);
+            if (data[DATA_RED_COLOR_POS][yPos2][xBytePos] & xBitMask) {
+                PIN_R2_SET_HIGH;
+            } else {
+                PIN_R2_SET_LOW;
+            }
 
-            digitalWrite(PIN_CLK, HIGH);
-            digitalWrite(PIN_CLK, LOW);
+            if (data[DATA_GREEN_COLOR_POS][yPos1][xBytePos] & xBitMask) {
+                PIN_G1_SET_HIGH;
+            } else {
+                PIN_G1_SET_LOW;
+            }
+
+            if (data[DATA_GREEN_COLOR_POS][yPos2][xBytePos] & xBitMask) {
+                PIN_G2_SET_HIGH;
+            } else {
+                PIN_G2_SET_LOW;
+            }
+
+            if (data[DATA_BLUE_COLOR_POS][yPos1][xBytePos] & xBitMask) {
+                PIN_B1_SET_HIGH;
+            } else {
+                PIN_B1_SET_LOW;
+            }
+
+            if (data[DATA_BLUE_COLOR_POS][yPos2][xBytePos] & xBitMask) {
+                PIN_B2_SET_HIGH;
+            } else {
+                PIN_B2_SET_LOW;
+            }
+
+            PIN_CLK_SET_HIGH;
+            PIN_CLK_SET_LOW;
         }
     }
 }
