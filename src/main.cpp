@@ -25,16 +25,32 @@
 #define PIN_B2_SET_HIGH (PORTC |= (1 << PC2))
 
 #define PIN_A 5
+#define PIN_A_SET_LOW (PORTD &= ~(1 << PD5))
+#define PIN_A_SET_HIGH (PORTD |= (1 << PD5))
+
 #define PIN_B 17
+#define PIN_B_SET_LOW (PORTC &= ~(1 << PC3))
+#define PIN_B_SET_HIGH (PORTC |= (1 << PC3))
+
 #define PIN_C 4
+#define PIN_C_SET_LOW (PORTD &= ~(1 << PD4))
+#define PIN_C_SET_HIGH (PORTD |= (1 << PD4))
+
 #define PIN_D 18
+#define PIN_D_SET_LOW (PORTC &= ~(1 << PC4))
+#define PIN_D_SET_HIGH (PORTC |= (1 << PC4))
 
 #define PIN_CLK 3
 #define PIN_CLK_SET_LOW (PORTD &= ~(1 << PD3))
 #define PIN_CLK_SET_HIGH (PORTD |= (1 << PD3))
 
 #define PIN_LAT 19
+#define PIN_LAT_SET_LOW (PORTC &= ~(1 << PC5))
+#define PIN_LAT_SET_HIGH (PORTC |= (1 << PC5))
+
 #define PIN_OE_NOT 2
+#define PIN_OE_SET_LOW (PORTD &= ~(1 << PD2))
+#define PIN_OE_SET_HIGH (PORTD |= (1 << PD2))
 
 #define DATA_ROWS 32 // Y
 #define DATA_COLUMNS 64 // X
@@ -104,17 +120,36 @@ void drawFrame() {
     for (uint8_t yPos1=0; yPos1<dataRowsHalf; yPos1++) {
         puschData(yPos1, yPos1 + dataRowsHalf);
 
-        digitalWrite(PIN_OE_NOT, HIGH);
+        PIN_OE_SET_HIGH;
 
-        digitalWrite(PIN_LAT, HIGH);
-        digitalWrite(PIN_LAT, LOW);
+        PIN_LAT_SET_HIGH;
+        PIN_LAT_SET_LOW;
 
-        digitalWrite(PIN_A, yPos1 & 0b00000001);
-        digitalWrite(PIN_B, yPos1 & 0b00000010);
-        digitalWrite(PIN_C, yPos1 & 0b00000100);
-        digitalWrite(PIN_D, yPos1 & 0b00001000);
+        if (yPos1 & 0b00000001) {
+            PIN_A_SET_HIGH;
+        } else {
+            PIN_A_SET_LOW;
+        }
 
-        digitalWrite(PIN_OE_NOT, LOW);
+        if (yPos1 & 0b00000010) {
+            PIN_B_SET_HIGH;
+        } else {
+            PIN_B_SET_LOW;
+        }
+
+        if (yPos1 & 0b00000100) {
+            PIN_C_SET_HIGH;
+        } else {
+            PIN_C_SET_LOW;
+        }
+
+        if (yPos1 & 0b00001000) {
+            PIN_D_SET_HIGH;
+        } else {
+            PIN_D_SET_LOW;
+        }
+
+        PIN_OE_SET_LOW;
     }
 }
 
