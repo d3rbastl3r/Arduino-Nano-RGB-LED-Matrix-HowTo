@@ -48,9 +48,9 @@
 #define PIN_LAT_SET_LOW (PORTC &= ~(1 << PC5))
 #define PIN_LAT_SET_HIGH (PORTC |= (1 << PC5))
 
-#define PIN_OE_MODE_OUT (DDRD |= (1 << DDD2))
-#define PIN_OE_SET_LOW (PORTD &= ~(1 << PD2))
-#define PIN_OE_SET_HIGH (PORTD |= (1 << PD2))
+#define PIN_nOE_MODE_OUT (DDRD |= (1 << DDD2))
+#define PIN_nOE_SET_LOW (PORTD &= ~(1 << PD2))
+#define PIN_nOE_SET_HIGH (PORTD |= (1 << PD2))
 
 #define DATA_ROWS 32 // Y
 #define DATA_COLUMNS 64 // X
@@ -120,7 +120,7 @@ void drawFrame() {
     for (uint8_t yPos1=0; yPos1<dataRowsHalf; yPos1++) {
         puschData(yPos1, yPos1 + dataRowsHalf);
 
-        PIN_OE_SET_HIGH;
+        PIN_nOE_SET_HIGH;
 
         PIN_LAT_SET_HIGH;
         PIN_LAT_SET_LOW;
@@ -149,7 +149,7 @@ void drawFrame() {
             PIN_D_SET_LOW;
         }
 
-        PIN_OE_SET_LOW;
+        PIN_nOE_SET_LOW;
     }
 }
 
@@ -168,7 +168,7 @@ void setup() {
 
     PIN_CLK_MODE_OUT;
     PIN_LAT_MODE_OUT;
-    PIN_OE_MODE_OUT;
+    PIN_nOE_MODE_OUT;
 
     // Test Output
     data[DATA_RED_COLOR_POS][0][0] = 0b00011001;
