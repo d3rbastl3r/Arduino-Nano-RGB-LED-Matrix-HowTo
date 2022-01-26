@@ -6,4 +6,6 @@ int main() {
     while(true) {
         rgbLedMatrixCtrl.draw();
     }
+
+    return 0;
 }
